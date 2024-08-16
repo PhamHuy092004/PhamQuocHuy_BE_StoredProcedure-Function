@@ -103,8 +103,17 @@ namespace PhamQuocHuy_BE_StoredProcedure_Function.Services
             }
         }
 
+        public Users GetUserID(int id)
+        {
+            using (IDbConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                // Sử dụng stored procedure để lấy người dùng theo Id
+                var user = connection.QuerySingleOrDefault<Users>("GetUserWithId", new { UserId = id }, commandType: CommandType.StoredProcedure);
 
-
+                return user;
+            }
+        }
     }
 
 }
